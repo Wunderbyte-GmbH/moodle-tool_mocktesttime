@@ -158,7 +158,7 @@ namespace $namespace;
  *
  */
 function time() {
-    return \tool_mocktesttime\\time_mock::get_mock_time() ?? 1000000000;
+    return \\tool_mocktesttime\\time_mock::get_mock_time() ?? 1000000000;
 }
 ";
 
