@@ -49,10 +49,10 @@ class time_mock {
     /**
      * Sets the mock time.
      *
-     * @param mixed $timestamp
+     * @param ?int $timestamp
      *
      */
-    public static function set_mock_time($timestamp) {
+    public static function set_mock_time($timestamp = null) {
 
         if (empty($timestamp)) {
             $timestamp = time();
