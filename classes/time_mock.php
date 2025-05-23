@@ -67,7 +67,7 @@ class time_mock {
      *
      */
     public static function reset_mock_time() {
-        self::$mocktime = null;
+        self::$mocktime = strtotime('now');
     }
 
     /**
@@ -79,7 +79,7 @@ class time_mock {
     public static function get_mock_time() {
 
         if (empty(self::$mocktime)) {
-            self::$mocktime = 1000000000;
+            self::$mocktime = strtotime('now');
         }
 
         return self::$mocktime;
@@ -163,7 +163,7 @@ namespace $namespace;
  *
  */
 function time() {
-    return \\tool_mocktesttime\\time_mock::get_mock_time() ?? 1000000000;
+    return \\tool_mocktesttime\\time_mock::get_mock_time() ?? strtotime('now');
 }
 ";
 
