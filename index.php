@@ -22,8 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__ . '/../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+defined('MOODLE_INTERNAL') || die;
+
+require_once(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
+
+require_login();
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_mocktesttime'));
