@@ -26,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_mocktesttime'; // Full name of the plugin (used for diagnostics)
-$plugin->release = '0.1.0';
-$plugin->version   = 2025022200; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->release = '0.1.1';
+$plugin->version   = 2025052300; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2022111800; // Requires this Moodle version.
 $plugin->maturity = MATURITY_ALPHA;
 
