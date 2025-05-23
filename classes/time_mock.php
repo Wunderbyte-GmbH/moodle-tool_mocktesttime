@@ -30,6 +30,7 @@ use Exception;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use stdClass;
+use Throwable;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -83,7 +84,7 @@ class time_mock {
 
         return self::$mocktime;
     }
-	
+
 	/**
      * Setup function.
      */
@@ -124,7 +125,7 @@ class time_mock {
             if (file_exists($filename)) {
                 continue;
             }
-            $overrideCode = "<?php
+            $overridecode = "<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -162,20 +163,23 @@ function time() {
 }
 ";
 
-            file_put_contents($filename, $overrideCode);
+            file_put_contents($filename, $overridecode);
         }
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($overrideDir));
 
         foreach ($files as $file) {
-            if ($file->getExtension() !== 'php') continue;
+            if ($file->getExtension() !== 'php') {
+                continue;
+            }
 
             $path = $file->getRealPath();
-            //if (strpos($path, 'tool_mocktesttime_local_time') > 0) {
-            //    $a = 1;
-            //}
-
-            require($path);
+            try {
+                // There might be an error with redeclation of namespaces. We catch it.
+                require_once($path);
+            } catch (Throwable $e) {
+                continue;
+            }
         }
     }
 }
