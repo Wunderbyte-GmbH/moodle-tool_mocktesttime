@@ -30,4 +30,3 @@ $plugin->release = '0.1.1';
 $plugin->version   = 2025052301; // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2022111800; // Requires this Moodle version.
 $plugin->maturity = MATURITY_ALPHA;
-
