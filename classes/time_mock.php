@@ -85,15 +85,18 @@ class time_mock {
         return self::$mocktime;
     }
 
-	/**
-     * Setup function.
+    /**
+     * Init mock testtime.
+     *
+     * @return void
+     *
      */
     public static function init(): void {
 
         $namespaces = [];
         $directory = dirname(__DIR__, 4);
 
-        // Make sure the directory exists and is a directory
+        // Make sure the directory exists and is a directory.
         if (!is_dir($directory)) {
             throw new Exception("Provided path is not a valid directory: $directory");
         }
@@ -101,7 +104,9 @@ class time_mock {
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
         foreach ($files as $file) {
-            if ($file->getExtension() !== 'php') continue;
+            if ($file->getExtension() !== 'php') {
+                continue;
+            };
 
             $contents = file_get_contents($file->getRealPath());
             if (preg_match('/namespace\s+([a-zA-Z0-9_\\\\]+);/', $contents, $matches)) {
@@ -112,15 +117,14 @@ class time_mock {
             }
         }
 
-        $overrideDir = __DIR__ . '/time_overrides/';
-        if (!is_dir($overrideDir)) {
-            mkdir($overrideDir, 0777, true);
+        $overridedir = __DIR__ . '/time_overrides/';
+        if (!is_dir($overridedir)) {
+            mkdir($overridedir, 0777, true);
         }
 
         foreach ($namespaces as $namespace) {
-
             $namespace = str_replace('\\\\', '\\', $namespace);
-            $filename = $overrideDir . str_replace('\\', '_', $namespace) . '_time.php';
+            $filename = $overridedir . str_replace('\\', '_', $namespace) . '_time.php';
 
             if (file_exists($filename)) {
                 continue;
@@ -166,7 +170,7 @@ function time() {
             file_put_contents($filename, $overridecode);
         }
 
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($overrideDir));
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($overridedir));
 
         foreach ($files as $file) {
             if ($file->getExtension() !== 'php') {
